@@ -44,6 +44,32 @@
 - 오류 처리 전략 (API 실패 시)
 - 기준년도 설정 (2015 또는 2020 권장)
 
+### G20 국가 코드 (OECD API용)
+- **KOR** (South Korea), **USA** (United States), **JPN** (Japan), **DEU** (Germany), **GBR** (United Kingdom)
+- **FRA** (France), **ITA** (Italy), **CAN** (Canada), **AUS** (Australia), **BRA** (Brazil)
+- **CHN** (China), **IND** (India), **RUS** (Russia), **MEX** (Mexico), **ZAF** (South Africa)
+- **ARG** (Argentina), **IDN** (Indonesia), **SAU** (Saudi Arabia), **TUR** (Turkey), **EU** (European Union)
+
+### OECD API 상세 엔드포인트 예제
+- **CPI 데이터 수집**:
+  - URL 패턴: `https://sdmx.oecd.org/public/rest/data/OECD.SDD.CPI,DSD_CPI@DF_CPI/.{COUNTRIES}.A?startPeriod={START}&endPeriod={END}&format=jsondata`
+  - 예제: `https://sdmx.oecd.org/public/rest/data/OECD.SDD.CPI,DSD_CPI@DF_CPI/.KOR+USA+JPN+DEU+GBR.A?startPeriod=2020&endPeriod=2023&format=jsondata`
+- **PPP 데이터 수집**:
+  - URL 패턴: `https://sdmx.oecd.org/public/rest/data/OECD.EL,DSD_PPP@DF_PPP/.{COUNTRIES}.A?startPeriod={START}&endPeriod={END}&format=jsondata`
+- **CSV 포맷 사용 시**:
+  - `format=csvfilewithlabels` 파라미터 사용
+  - pandas.read_csv()로 직접 로드 가능
+
+### 지수 계산 방법론 및 데이터 모델
+- **Korea=100 기준 상대 지수**:
+  - 기준년도(2020 권장) 설정
+  - 각 국가의 물가지수 = (국가 물가값 / 한국 기준년도 물가값) × 100
+  - 예: 일본 물가가 한국의 0.8배면 지수는 80, 미국이 1.2배면 120
+- **데이터 모델**:
+  - Long form: `country_code, country_name, year, dataset_type (CPI/PPP), obs_value`
+  - Derived: `index_KOR100 = (obs_value / korea_base_value) × 100`
+  - Wide form (시각화용): year × country columns
+
 ---
 
 ## Work Objectives
