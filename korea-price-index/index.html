@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>한국 물가 비교 인덱스 | Korea Price Index</title>
+  <meta name="description" content="한국의 물가를 세계 주요 국가들과 비교하여 지수 형태로 시각화합니다. OECD, Numbeo 데이터 기반.">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-gradient"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header fade-up">
+      <div class="header-badge">
+        <span class="dot"></span>
+        2025-2026 실시간 데이터 기반
+      </div>
+      <h1><img src="https://flagcdn.com/w80/kr.png" alt="KR" style="width:40px;height:30px;border-radius:6px;object-fit:cover;vertical-align:middle;margin-right:8px;">한국 물가<br><span class="highlight">세계 비교 인덱스</span></h1>
+      <p>OECD 및 Numbeo 데이터를 기반으로 한국의 생활 물가를 세계 주요 국가들과 비교합니다</p>
+    </header>
+
+    <!-- Overview Cards -->
+    <section class="overview-grid" id="overview">
+      <div class="overview-card fade-up">
+        <div class="card-icon" style="background: rgba(239,68,68,0.12);">🍎</div>
+        <div class="card-label">식료품 물가</div>
+        <div class="card-value" style="color: var(--accent-red);">151</div>
+        <div class="card-desc">OECD 평균 대비 (100 기준) · OECD 2위</div>
+      </div>
+      <div class="overview-card fade-up">
+        <div class="card-icon" style="background: rgba(245,158,11,0.12);">👔</div>
+        <div class="card-label">의류 물가</div>
+        <div class="card-value" style="color: var(--accent-amber);">161</div>
+        <div class="card-desc">OECD 평균 대비 (100 기준)</div>
+      </div>
+      <div class="overview-card fade-up">
+        <div class="card-icon" style="background: rgba(139,92,246,0.12);">🏠</div>
+        <div class="card-label">주거비</div>
+        <div class="card-value" style="color: var(--accent-purple);">123</div>
+        <div class="card-desc">OECD 평균 대비 (100 기준)</div>
+      </div>
+      <div class="overview-card fade-up">
+        <div class="card-icon" style="background: rgba(16,185,129,0.12);">🚇</div>
+        <div class="card-label">교통비</div>
+        <div class="card-value" style="color: var(--accent-emerald);">87</div>
+        <div class="card-desc">OECD 평균 대비 · 저렴한 편</div>
+      </div>
+    </section>
+
+    <!-- Bar Chart: Cost of Living Index -->
+    <section class="chart-section fade-up">
+      <div class="section-title">📊 생활비 종합 지수</div>
+      <div class="section-subtitle">뉴욕(NYC) = 100 기준 · Numbeo 2026 데이터</div>
+      <div class="chart-card">
+        <div class="chart-tabs">
+          <button class="chart-tab active" data-tab="overall">종합 생활비</button>
+          <button class="chart-tab" data-tab="food">식료품</button>
+          <button class="chart-tab" data-tab="rent">임대료</button>
+          <button class="chart-tab" data-tab="restaurant">외식비</button>
+        </div>
+        <div class="bar-chart" id="barChart"></div>
+      </div>
+    </section>
+
+    <!-- Country Comparison Table -->
+    <section class="comparison-section fade-up">
+      <div class="section-title">🌏 국가별 상세 비교</div>
+      <div class="section-subtitle">한국을 기준(100)으로 환산한 각국 물가 지수</div>
+      <div class="table-card">
+        <div class="table-wrapper">
+          <table class="comparison-table" id="compTable">
+            <thead>
+              <tr>
+                <th>국가</th>
+                <th>종합 물가</th>
+                <th>식료품</th>
+                <th>외식비</th>
+                <th>임대료</th>
+                <th>교통비</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Item Price Comparison -->
+    <section class="items-section fade-up">
+      <div class="section-title">🛒 품목별 가격 비교</div>
+      <div class="section-subtitle">주요 생활 품목의 실제 가격을 비교합니다 (USD 환산)</div>
+      <div class="items-grid" id="itemsGrid"></div>
+    </section>
+
+    <!-- Insights -->
+    <section class="insights-section fade-up">
+      <div class="section-title">💡 핵심 인사이트</div>
+      <div class="section-subtitle">한국 물가의 주요 특징을 요약합니다</div>
+      <div class="insights-grid">
+        <div class="insight-card insight-warn">
+          <div class="insight-icon">⚠️</div>
+          <div class="insight-title">식료품 가격 OECD 2위</div>
+          <div class="insight-desc">한국의 식료품 물가는 스위스에 이어 OECD 2위입니다. 과일, 채소, 육류 등 주요 식재료가 OECD 평균의 1.5배 이상이며, 낮은 농산물 자급률과 복잡한 유통 구조가 원인입니다.</div>
+        </div>
+        <div class="insight-card insight-warn">
+          <div class="insight-icon">👗</div>
+          <div class="insight-title">의류비 OECD 최상위</div>
+          <div class="insight-desc">의류 물가 지수 161로 OECD 평균보다 61% 높습니다. 의식주 필수 품목 전반에서 높은 가격을 보이며, 이는 국민 체감 물가가 높은 핵심 원인입니다.</div>
+        </div>
+        <div class="insight-card insight-good">
+          <div class="insight-icon">🚇</div>
+          <div class="insight-title">대중교통은 매우 저렴</div>
+          <div class="insight-desc">지하철·버스 등 대중교통은 주요국 대비 매우 효율적이고 저렴합니다. 교통비, 통신비, 전기·가스 등 공공서비스는 OECD 평균보다 10~15% 낮습니다.</div>
+        </div>
+        <div class="insight-card insight-info">
+          <div class="insight-icon">📈</div>
+          <div class="insight-title">체감 vs 실제 물가 괴리</div>
+          <div class="insight-desc">전체 소비지출 물가는 OECD 평균 이하이지만, 매일 소비하는 식료품·의류·주거비가 월등히 높아 국민이 느끼는 체감 물가는 매우 높은 상태입니다.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>데이터 출처: <a href="https://www.numbeo.com" target="_blank">Numbeo</a>, <a href="https://data.oecd.org" target="_blank">OECD</a>, 한국은행 · 2025-2026 기준</p>
+      <p style="margin-top:8px;">본 사이트는 참고용이며 실시간 변동이 있을 수 있습니다.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
