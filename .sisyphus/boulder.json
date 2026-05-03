@@ -1,0 +1,50 @@
+{
+  "active_plan": "C:\\Users\\Jeon Huijun\\OneDrive\\바탕 화면\\K-Collusion Index\\.sisyphus\\plans\\k-collusion-index.md",
+  "started_at": "2026-05-02T10:59:03.128Z",
+  "session_ids": [
+    "ses_21876a9dcffeq4rKatCFf03t6X"
+  ],
+  "session_origins": {
+    "ses_21876a9dcffeq4rKatCFf03t6X": "direct"
+  },
+  "plan_name": "k-collusion-index",
+  "agent": "atlas",
+  "task_sessions": {
+    "todo:1": {
+      "task_key": "todo:1",
+      "task_label": "1",
+      "task_title": "Next.js 프로젝트 초기화 + TypeScript 설정",
+      "session_id": "ses_217a81672ffeaorZ0pwl3WpsJY",
+      "agent": "Sisyphus-Junior",
+      "category": "quick",
+      "updated_at": "2026-05-02T11:29:29.617Z"
+    },
+    "todo:2": {
+      "task_key": "todo:2",
+      "task_label": "2",
+      "task_title": "Python 가?�환�?+ ?�존???�치",
+      "session_id": "ses_2146c4a22ffe81CDIOfQs2bpQt",
+      "agent": "Sisyphus-Junior",
+      "category": "visual-engineering",
+      "updated_at": "2026-05-03T02:08:41.491Z"
+    },
+    "todo:3": {
+      "task_key": "todo:3",
+      "task_label": "3",
+      "task_title": "OECD ?�이???�칭 모듈 구현#",
+      "session_id": "ses_2138dfbf7ffeZz9hSH7Ka2lqIN",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-03T06:36:29.157Z"
+    },
+    "todo:6": {
+      "task_key": "todo:6",
+      "task_label": "6",
+      "task_title": "지??계산 모듈 구현 (Korea=100)#",
+      "session_id": "ses_212f7c50effe49saQBiNbjNqVk",
+      "agent": "Sisyphus-Junior",
+      "category": "unspecified-high",
+      "updated_at": "2026-05-03T09:20:33.501Z"
+    }
+  }
+}

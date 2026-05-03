@@ -1,0 +1,161 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 1.5rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.description {
+  color: #718096;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* 통계 컨테이너 */
+.statsContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.statBox {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.statValue {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+/* 섹션 스타일 */
+.chartSection,
+.tableSection {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e2e8f0;
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  border-left: 4px solid #667eea;
+  padding-left: 0.75rem;
+}
+
+/* 에러 컨테이너 */
+.errorContainer {
+  background-color: #fff5f5;
+  border: 1px solid #fc8181;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  color: #c53030;
+}
+
+/* 내보내기 링크 */
+.exportLinks {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.exportButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #48bb78;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.exportButton:hover {
+  background-color: #38a169;
+  transform: translateY(-2px);
+}
+
+/* 다크 모드 지원 */
+@media (prefers-color-scheme: dark) {
+  .title {
+    color: #f7fafc;
+  }
+
+  .description {
+    color: #a0aec0;
+  }
+
+  .header {
+    border-bottom-color: #4a5568;
+  }
+
+  .chartSection,
+  .tableSection {
+    background: #2d3748;
+    border-color: #4a5568;
+  }
+
+  .sectionTitle {
+    color: #f7fafc;
+  }
+
+  .errorContainer {
+    background-color: #742a2a;
+    border-color: #c53030;
+    color: #feb2b2;
+  }
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .statsContainer {
+    grid-template-columns: 1fr;
+  }
+
+  .exportLinks {
+    flex-direction: column;
+  }
+}
