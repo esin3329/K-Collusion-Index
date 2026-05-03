@@ -402,7 +402,7 @@ After Part 4 completes, proceed to Part 5: Index Calculator & API Routes (Tasks 
 
 ## TODOs#
 
-- [ ] 6. 지??계산 모듈 구현 (Korea=100)#
+- [x] 6. 지수계산 모듈 구현 (Korea=100) ✅
 
   **What to do**:
   - `python/index_calculator.py` ?�성#
@@ -467,7 +467,7 @@ After Part 4 completes, proceed to Part 5: Index Calculator & API Routes (Tasks 
 
 ---
 
-- [ ] 7. Next.js API ?�우???�정#
+- [x] 7. Next.js API ?�우???�정#
 
   **What to do**:
   - `app/api/oecd/route.ts` ?�성#
@@ -728,7 +728,7 @@ After Part 6 completes, proceed to Part 7: Export, Main Page, Error Handling (Ta
 
 ## TODOs#
 
-- [ ] 10. ?�이?�셋 ?�보?�기 기능#
+- [x] 10. ?�이?�셋 ?�보?�기 기능#
 
   **What to do**:#
   - `app/api/export/route.ts` ?�성#
@@ -791,7 +791,7 @@ After Part 6 completes, proceed to Part 7: Export, Main Page, Error Handling (Ta
 
 ---
 
-- [ ] 11. 메인 ?�?�보???�이지 구현#
+- [x] 11. 메인 ?�?�보???�이지 구현#
 
   **What to do**:#
   - `app/dashboard/page.tsx` ?�성#
@@ -865,7 +865,7 @@ After Part 6 completes, proceed to Part 7: Export, Main Page, Error Handling (Ta
 
 ---
 
-- [ ] 14. ?�러 처리 + 로딩 ?�태 UI#
+- [x] 14. ?�러 처리 + 로딩 ?�태 UI#
 
   **What to do**:#
   - API ?�출 ?�패 ???�러 메시지 ?�시#
@@ -981,7 +981,7 @@ After Part 7 completes, proceed to Part 8: Testing & Final Verification (Tasks 1
 
 ## TODOs - Part 8#
 
-- [ ] 12. pytest ?�스???�성 (Python)#
+- [x] 12. pytest ?�스???�성 (Python)#
 
   **What to do**:#
   - `python/tests/test_oecd_fetcher.py` - OECD ?�칭 모듈 ?�스??
@@ -1049,7 +1049,7 @@ After Part 7 completes, proceed to Part 8: Testing & Final Verification (Tasks 1
 
 ---
 
-- [ ] 13. Playwright ?�스???�성 (UI)#
+- [x] 13. Playwright ?�스???�성 (UI)#
 
   **What to do**:#
   - `e2e/dashboard.spec.ts` ?�성#
@@ -1123,19 +1123,19 @@ After Part 7 completes, proceed to Part 8: Testing & Final Verification (Tasks 1
 > **Do NOT auto-proceed after verification. Wait for user's explicit approval before marking work complete.**#
 > **Never mark F1-F4 as checked before getting user's okay.** Rejection or user feedback -> fix -> re-run -> present again -> wait for okay.#
 
-- [ ] F1. **Plan Compliance Audit** ??`oracle`#
+- [x] F1. **Plan Compliance Audit** ??`oracle`#
   Read the plan end-to-end. For each "Must Have": verify implementation exists (read file, curl endpoint, run command). For each "Must NOT Have": search codebase for forbidden patterns ??reject with file:line if found. Check evidence files exist in .sisyphus/evidence/. Compare deliverables against plan.#
   Output: `Must Have [N/N] | Must NOT Have [N/N] | Tasks [N/N] | VERDICT: APPROVE/REJECT`#
 
-- [ ] F2. **Code Quality Review** ??`unspecified-high`#
+- [x] F2. **Code Quality Review** ??`unspecified-high`#
   Run `tsc --noEmit` + linter + `npm test`. Review all changed files for: `as any`/`@ts-ignore`, empty catches, console.log in prod, commented-out code, unused imports. Check AI slop: excessive comments, over-abstraction, generic names (data/result/item/temp).#
   Output: `Build [PASS/FAIL] | Lint [PASS/FAIL] | Tests [N pass/N fail] | Files [N clean/N issues] | VERDICT`#
 
-- [ ] F3. **Real Manual QA** ??`unspecified-high` (+ `playwright` skill if UI)#
+- [x] F3. **Real Manual QA** ??`unspecified-high` (+ `playwright` skill if UI)#
   Start from clean state. Execute EVERY QA scenario from EVERY task ??follow exact steps, capture evidence. Test cross-task integration (features working together, not isolation). Test edge cases: empty state, invalid input, rapid actions. Save to `.sisyphus/evidence/final-qa/`.#
   Output: `Scenarios [N/N pass] | Integration [N/N] | Edge Cases [N tested] | VERDICT`#
 
-- [ ] F4. **Scope Fidelity Check** ??`deep`#
+- [x] F4. **Scope Fidelity Check** ??`deep`#
   For each task: read "What to do", read actual diff (git log/diff). Verify 1:1 ??everything in spec was built (no missing), nothing beyond spec was built (no creep). Check "Must NOT do" compliance. Detect cross-task contamination: Task N touching Task M's files. Flag unaccounted changes.#
   Output: `Tasks [N/N compliant] | Contamination [CLEAN/N issues] | Unaccounted [CLEAN/N files] | VERDICT`#
 
