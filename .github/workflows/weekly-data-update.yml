@@ -1,0 +1,74 @@
+name: Weekly K-Collusion Data Update
+
+on:
+  schedule:
+    # weekly: Sunday 06:00 UTC
+    - cron: '0 6 * * 0'
+  workflow_dispatch: {}
+
+jobs:
+  update-data:
+    name: Regenerate and commit data (weekly)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: true
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas pandasdmx requests
+
+      - name: Run data generation script
+        id: gen
+        run: |
+          set -e
+          echo "Running python/generate_data.py"
+          python python/generate_data.py
+
+      - name: Check for changes
+        id: check
+        run: |
+          set -e
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git config --global user.name "github-actions[bot]"
+          # Ensure file exists
+          if [ ! -f public/data/k-collusion-index.json ]; then echo "ERROR: generated file missing"; exit 1; fi
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "Changes detected"
+            git commit -m "chore(data): automatic update of k-collusion-index.json [skip ci]" || true
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Push changes (if any)
+        if: steps.check.outputs.changed == 'true'
+        run: |
+          set -e
+          echo "Pushing committed changes back to the default branch"
+          git push origin HEAD:${{ github.ref_name }}
+
+      - name: Optional smoke test of Pages URL
+        if: secrets.PAGES_URL != ''
+        run: |
+          set -e
+          echo "Running smoke test against ${{ secrets.PAGES_URL }}"
+          curl -fsS "${{ secrets.PAGES_URL }}/public/data/k-collusion-index.json" -o /tmp/k-collusion-index.json
+          if [ ! -s /tmp/k-collusion-index.json ]; then echo "Smoke test failed: empty file"; exit 1; fi
+          # Validate JSON
+          python -c "import sys, json; json.load(open('/tmp/k-collusion-index.json'))" || (echo 'Invalid JSON' && exit 1)
+
+      - name: Final status
+        run: |
+          if [ "${{ steps.check.outputs.changed }}" = 'true' ]; then echo "Committed and pushed updated data file"; else echo "No changes — nothing to commit"; fi
