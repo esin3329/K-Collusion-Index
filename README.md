@@ -28,8 +28,11 @@ python -m venv venv
 # 가상환경 활성화 (Windows)
 .\venv\Scripts\activate
 
+# 가상환경 활성화 (POSIX)
+source venv/bin/activate
+
 # 필요한 패키지 설치
-pip install pandas pandasdmx
+pip install pandas pandasdmx requests
 ```
 
 ### 2. Node.js 환경 설정
@@ -44,6 +47,42 @@ npm run dev
 ```
 
 브라우저에서 [http://localhost:3000](http://localhost:3000)에 접속하여 결과를 확인할 수 있습니다.
+
+## CI / Build-time data generation (CI / 빌드 시 데이터 생성)
+
+이 프로젝트는 빌드 시점에 최신 데이터를 수집하여 정적 파일로 포함합니다. GitHub Actions를 통해 자동화되어 있으며, 로컬에서도 동일한 과정을 수행할 수 있습니다.
+
+### CI 워크플로우 (.github/workflows/prebuild.yml)
+- **트리거**: `main` 브랜치로의 push 및 pull request 발생 시 실행됩니다.
+- **역할**: Python 환경을 구축하고 `python/generate_data.py`를 실행하여 `public/data/k-collusion-index.json` 파일을 생성합니다. 이후 Next.js 빌드를 진행하여 데이터가 포함된 정적 사이트를 생성합니다.
+
+### 로컬에서 데이터 생성하기 (Local Prebuild)
+CI와 동일하게 로컬에서 데이터를 수집하고 생성하려면 다음 단계를 따르세요.
+
+#### 1. Python 가상환경 생성 및 활성화
+```bash
+# POSIX (Linux, macOS)
+python -m venv venv
+source venv/bin/activate
+
+# Windows
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+#### 2. 필수 패키지 설치
+```bash
+pip install pandas pandasdmx requests
+```
+
+#### 3. 데이터 생성 스크립트 실행 및 확인
+```bash
+# POSIX
+python python/generate_data.py && ls public/data/k-collusion-index.json
+
+# Windows
+python python/generate_data.py; if (Test-Path public/data/k-collusion-index.json) { ls public/data/k-collusion-index.json }
+```
 
 ## 데이터 출처
 본 프로젝트는 [OECD SDMX-JSON API](https://sdmx.oecd.org/public/rest/data/)에서 제공하는 공식 데이터를 사용합니다.

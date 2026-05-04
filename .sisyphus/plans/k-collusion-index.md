@@ -22,6 +22,10 @@
 
 - [x] 1. Next.js ?�로?�트 초기??+ TypeScript ?�정
 
+- [x] CI. Add GitHub Actions workflow to run prebuild data generation and Next.js build
+
+- [x] Fix: removed invalid smoke-test condition from weekly-data-update workflow (2026-05-04T01:23:45Z)
+
   **What to do**:
   - `npx create-next-app@latest . --ts --app --eslint --no-tailwind --no-src-dir --import-alias "@/*"` ?�행
   - TypeScript ?�정 ?�인 (tsconfig.json)
@@ -47,8 +51,8 @@
   - Next.js App Router 공식 문서: https://nextjs.org/docs/app/getting-started
   - Recharts 공식 문서: https://recharts.org/en-US/
 
-  **Acceptance Criteria**:
-  - [ ] `npm run build` ?�공
+    **Acceptance Criteria**:
+    - [x] `npm run build` ?�공
   - [ ] `npm run dev` ?�행 ??기본 ?�이지 ?�시
   - [ ] package.json??recharts, playwright ?�존??존재
 
