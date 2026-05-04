@@ -2,75 +2,51 @@
   "success": true,
   "data": [
     {
-      "countryCode": "EU27",
-      "countryName": "유럽연합",
-      "indexValue": 148.06,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "MEX",
-      "countryName": "멕시코",
-      "indexValue": 143.33,
-      "baseYear": 2023
-    },
-    {
       "countryCode": "USA",
       "countryName": "미국",
-      "indexValue": 141.37,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "TUR",
-      "countryName": "터키",
-      "indexValue": 140.32,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "ITA",
-      "countryName": "이탈리아",
-      "indexValue": 138.3,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "BRA",
-      "countryName": "브라질",
-      "indexValue": 137.8,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "ZAF",
-      "countryName": "남아프리카공화국",
-      "indexValue": 129.72,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "ARG",
-      "countryName": "아르헨티나",
-      "indexValue": 128.17,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "CAN",
-      "countryName": "캐나다",
-      "indexValue": 122.67,
+      "indexValue": 125.5,
       "baseYear": 2023
     },
     {
       "countryCode": "GBR",
       "countryName": "영국",
-      "indexValue": 113.24,
+      "indexValue": 118.7,
       "baseYear": 2023
     },
     {
       "countryCode": "DEU",
       "countryName": "독일",
-      "indexValue": 107.78,
+      "indexValue": 112.3,
       "baseYear": 2023
     },
     {
       "countryCode": "FRA",
       "countryName": "프랑스",
-      "indexValue": 107.61,
+      "indexValue": 110.5,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "EU27",
+      "countryName": "유럽연합",
+      "indexValue": 108.5,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "AUS",
+      "countryName": "호주",
+      "indexValue": 108.2,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "ITA",
+      "countryName": "이탈리아",
+      "indexValue": 107.4,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "CAN",
+      "countryName": "캐나다",
+      "indexValue": 105.8,
       "baseYear": 2023
     },
     {
@@ -80,48 +56,72 @@
       "baseYear": 2023
     },
     {
-      "countryCode": "AUS",
-      "countryName": "호주",
-      "indexValue": 90.62,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "RUS",
-      "countryName": "러시아",
-      "indexValue": 85.09,
+      "countryCode": "JPN",
+      "countryName": "일본",
+      "indexValue": 98.2,
       "baseYear": 2023
     },
     {
       "countryCode": "SAU",
       "countryName": "사우디아라비아",
-      "indexValue": 83.25,
+      "indexValue": 95.2,
       "baseYear": 2023
     },
     {
-      "countryCode": "IDN",
-      "countryName": "인도네시아",
-      "indexValue": 78.38,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "JPN",
-      "countryName": "일본",
-      "indexValue": 77.64,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "IND",
-      "countryName": "인도",
-      "indexValue": 76.67,
+      "countryCode": "RUS",
+      "countryName": "러시아",
+      "indexValue": 88.6,
       "baseYear": 2023
     },
     {
       "countryCode": "CHN",
       "countryName": "중국",
-      "indexValue": 76.22,
+      "indexValue": 85.3,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "BRA",
+      "countryName": "브라질",
+      "indexValue": 82.4,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "MEX",
+      "countryName": "멕시코",
+      "indexValue": 78.5,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "ZAF",
+      "countryName": "남아프리카공화국",
+      "indexValue": 75.8,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "IND",
+      "countryName": "인도",
+      "indexValue": 72.1,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "IDN",
+      "countryName": "인도네시아",
+      "indexValue": 70.2,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "TUR",
+      "countryName": "터키",
+      "indexValue": 68.3,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "ARG",
+      "countryName": "아르헨티나",
+      "indexValue": 65.4,
       "baseYear": 2023
     }
   ],
-  "timestamp": "2026-05-04T10:49:42.308283",
+  "timestamp": "2026-05-04T20:26:47.443306",
   "baseYear": 2023
 }
