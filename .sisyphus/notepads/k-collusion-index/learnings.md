@@ -38,3 +38,6 @@
 
 ## [2026-05-05T07:38:14Z] Removed prototype_repo submodule entry to fix Pages deployment
  - Reason: submodule entry existed in index but .gitmodules missing, causing Cloudflare Pages submodule initialization failure. Removed from index.
+
+## [2026-05-05T08:16:21Z] Added .gitignore entry for prototype_repo to prevent accidental tracking
+ - Reason: local prototype working dir should remain untracked to avoid submodule/index confusion in remote builds.
