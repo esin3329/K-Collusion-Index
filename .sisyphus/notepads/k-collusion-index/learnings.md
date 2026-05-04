@@ -23,3 +23,6 @@
 - Workflow behavior: setup Python 3.10, pip install pandas/pandasdmx/requests, run script, compare repo copy, commit+push only if changed (commit message includes [skip ci]).
 - Optional smoke-test step: if secret PAGES_URL is defined, curl and validate the deployed JSON.
 - Rationale: low-cost weekly automation that only pushes when data changes, minimizing Pages builds and CI usage.
+
+## [2026-05-04T01:23:45Z] Removed smoke-test step due to YAML parse error referencing secrets.PAGES_URL
+ - Reason: the conditional `if: secrets.PAGES_URL != ''` caused the GitHub Actions parser to fail when queuing the workflow. Removed the step to restore workflow queuing. Will re-add a safer check (vars or expression) later if needed.
