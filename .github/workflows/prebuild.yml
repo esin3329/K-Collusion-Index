@@ -1,0 +1,50 @@
+name: Prebuild and Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  prebuild:
+    name: Prebuild (Python data) + Node build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pandas pandasdmx requests
+
+      - name: Run data generation script
+        run: |
+          python python/generate_data.py
+
+      - name: Verify generated file exists
+        run: |
+          if [ -f public/data/k-collusion-index.json ]; then echo "FOUND: public/data/k-collusion-index.json"; else echo "MISSING: public/data/k-collusion-index.json" && exit 1; fi
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: next-build
+          path: .next
