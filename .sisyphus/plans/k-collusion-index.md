@@ -28,6 +28,8 @@
 
 - [x] Fix: removed tracked Python bytecode and updated .gitignore (2026-05-04T11:40:42Z)
 
+- [x] Fix: re-added optional smoke test for Pages URL (retrying 3x) (2026-05-04T11:52:00Z)
+
   **What to do**:
   - `npx create-next-app@latest . --ts --app --eslint --no-tailwind --no-src-dir --import-alias "@/*"` ?�행
   - TypeScript ?�정 ?�인 (tsconfig.json)

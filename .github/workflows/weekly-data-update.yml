@@ -59,7 +59,29 @@ jobs:
           echo "Pushing committed changes back to the default branch"
           git push origin HEAD:${{ github.ref_name }}
 
-      # Optional smoke test removed: referenced secrets.PAGES_URL in `if` caused YAML parse error when queuing
+      - name: Optional smoke test of Pages URL
+        if: ${{ secrets.PAGES_URL != '' }}
+        env:
+          PAGES_URL: ${{ secrets.PAGES_URL }}
+        run: |
+          set -e
+          echo "Running smoke test against $PAGES_URL"
+          ATTEMPTS=3
+          SLEEP=10
+          SUCCESS=0
+          for i in $(seq 1 $ATTEMPTS); do
+            echo "Attempt $i/$ATTEMPTS: fetching $PAGES_URL/public/data/k-collusion-index.json"
+            if curl -fsS "$PAGES_URL/public/data/k-collusion-index.json" -o /tmp/k-collusion-index.json; then
+              if [ -s /tmp/k-collusion-index.json ]; then
+                python -c "import sys,json; json.load(open('/tmp/k-collusion-index.json'))" && SUCCESS=1 && break || true
+              fi
+            fi
+            echo "Attempt $i failed, sleeping $SLEEP seconds..."
+            sleep $SLEEP
+          done
+          if [ "$SUCCESS" -ne 1 ]; then
+            echo "Smoke test failed after $ATTEMPTS attempts"; exit 1
+          fi
 
       - name: Final status
         run: |

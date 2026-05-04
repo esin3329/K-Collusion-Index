@@ -29,3 +29,6 @@
 
 ## [2026-05-04T11:40:42Z] Removed tracked Python bytecode and added .gitignore entries
  - Reason: generated __pycache__/*.pyc were accidentally committed by workflow. Removed from index and updated .gitignore to prevent re-committing compiled artifacts.
+
+## [2026-05-04T11:52:00Z] Re-added optional smoke test (retrying) for Pages URL
+ - Reason: add a safe smoke-test to validate deployed public/data/k-collusion-index.json when PAGES_URL secret is present. Uses 3 attempts with 10s backoff and JSON validation.
