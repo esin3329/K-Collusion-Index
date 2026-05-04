@@ -49,3 +49,6 @@ __pycache__/
 *.pyo
 *.pyd
 *.pyc
+
+# Ignore local prototype working dir
+prototype_repo/
