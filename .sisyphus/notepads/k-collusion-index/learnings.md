@@ -32,3 +32,9 @@
 
 ## [2026-05-04T11:52:00Z] Re-added optional smoke test (retrying) for Pages URL
  - Reason: add a safe smoke-test to validate deployed public/data/k-collusion-index.json when PAGES_URL secret is present. Uses 3 attempts with 10s backoff and JSON validation.
+
+## [2026-05-05T07:35:37Z] Removed prototype_repo submodule entry to fix Pages deployment
+ - Reason: submodule entry existed in index but .gitmodules missing, causing Cloudflare Pages submodule initialization failure. Removed from index.
+
+## [2026-05-05T07:38:14Z] Removed prototype_repo submodule entry to fix Pages deployment
+ - Reason: submodule entry existed in index but .gitmodules missing, causing Cloudflare Pages submodule initialization failure. Removed from index.
