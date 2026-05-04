@@ -26,3 +26,6 @@
 
 ## [2026-05-04T01:23:45Z] Removed smoke-test step due to YAML parse error referencing secrets.PAGES_URL
  - Reason: the conditional `if: secrets.PAGES_URL != ''` caused the GitHub Actions parser to fail when queuing the workflow. Removed the step to restore workflow queuing. Will re-add a safer check (vars or expression) later if needed.
+
+## [2026-05-04T11:40:42Z] Removed tracked Python bytecode and added .gitignore entries
+ - Reason: generated __pycache__/*.pyc were accidentally committed by workflow. Removed from index and updated .gitignore to prevent re-committing compiled artifacts.

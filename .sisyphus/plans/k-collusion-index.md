@@ -26,6 +26,8 @@
 
 - [x] Fix: removed invalid smoke-test condition from weekly-data-update workflow (2026-05-04T01:23:45Z)
 
+- [x] Fix: removed tracked Python bytecode and updated .gitignore (2026-05-04T11:40:42Z)
+
   **What to do**:
   - `npx create-next-app@latest . --ts --app --eslint --no-tailwind --no-src-dir --import-alias "@/*"` ?�행
   - TypeScript ?�정 ?�인 (tsconfig.json)
