@@ -2,51 +2,75 @@
   "success": true,
   "data": [
     {
-      "countryCode": "USA",
-      "countryName": "미국",
-      "indexValue": 125.5,
+      "countryCode": "TUR",
+      "countryName": "터키",
+      "indexValue": 148.46,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "CHN",
+      "countryName": "중국",
+      "indexValue": 141.45,
       "baseYear": 2023
     },
     {
       "countryCode": "GBR",
       "countryName": "영국",
-      "indexValue": 118.7,
+      "indexValue": 130.48,
       "baseYear": 2023
     },
     {
-      "countryCode": "DEU",
-      "countryName": "독일",
-      "indexValue": 112.3,
+      "countryCode": "ZAF",
+      "countryName": "남아프리카공화국",
+      "indexValue": 130.06,
       "baseYear": 2023
     },
     {
-      "countryCode": "FRA",
-      "countryName": "프랑스",
-      "indexValue": 110.5,
+      "countryCode": "USA",
+      "countryName": "미국",
+      "indexValue": 129.43,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "MEX",
+      "countryName": "멕시코",
+      "indexValue": 122.77,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "JPN",
+      "countryName": "일본",
+      "indexValue": 119.11,
       "baseYear": 2023
     },
     {
       "countryCode": "EU27",
       "countryName": "유럽연합",
-      "indexValue": 108.5,
+      "indexValue": 116.18,
       "baseYear": 2023
     },
     {
-      "countryCode": "AUS",
-      "countryName": "호주",
-      "indexValue": 108.2,
+      "countryCode": "IND",
+      "countryName": "인도",
+      "indexValue": 111.23,
+      "baseYear": 2023
+    },
+    {
+      "countryCode": "BRA",
+      "countryName": "브라질",
+      "indexValue": 110.2,
       "baseYear": 2023
     },
     {
       "countryCode": "ITA",
       "countryName": "이탈리아",
-      "indexValue": 107.4,
+      "indexValue": 106.85,
       "baseYear": 2023
     },
     {
       "countryCode": "CAN",
       "countryName": "캐나다",
-      "indexValue": 105.8,
+      "indexValue": 100.1,
       "baseYear": 2023
     },
     {
@@ -56,72 +80,48 @@
       "baseYear": 2023
     },
     {
-      "countryCode": "JPN",
-      "countryName": "일본",
-      "indexValue": 98.2,
+      "countryCode": "FRA",
+      "countryName": "프랑스",
+      "indexValue": 95.5,
       "baseYear": 2023
     },
     {
-      "countryCode": "SAU",
-      "countryName": "사우디아라비아",
-      "indexValue": 95.2,
+      "countryCode": "AUS",
+      "countryName": "호주",
+      "indexValue": 93.37,
       "baseYear": 2023
     },
     {
       "countryCode": "RUS",
       "countryName": "러시아",
-      "indexValue": 88.6,
+      "indexValue": 83.72,
       "baseYear": 2023
     },
     {
-      "countryCode": "CHN",
-      "countryName": "중국",
-      "indexValue": 85.3,
+      "countryCode": "DEU",
+      "countryName": "독일",
+      "indexValue": 82.05,
       "baseYear": 2023
     },
     {
-      "countryCode": "BRA",
-      "countryName": "브라질",
-      "indexValue": 82.4,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "MEX",
-      "countryName": "멕시코",
-      "indexValue": 78.5,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "ZAF",
-      "countryName": "남아프리카공화국",
-      "indexValue": 75.8,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "IND",
-      "countryName": "인도",
-      "indexValue": 72.1,
+      "countryCode": "SAU",
+      "countryName": "사우디아라비아",
+      "indexValue": 80.02,
       "baseYear": 2023
     },
     {
       "countryCode": "IDN",
       "countryName": "인도네시아",
-      "indexValue": 70.2,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "TUR",
-      "countryName": "터키",
-      "indexValue": 68.3,
+      "indexValue": 78.0,
       "baseYear": 2023
     },
     {
       "countryCode": "ARG",
       "countryName": "아르헨티나",
-      "indexValue": 65.4,
+      "indexValue": 77.39,
       "baseYear": 2023
     }
   ],
-  "timestamp": "2026-05-04T20:26:47.443306",
+  "timestamp": "2026-05-05T14:15:39.254079",
   "baseYear": 2023
 }
