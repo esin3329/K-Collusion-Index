@@ -52,3 +52,6 @@ __pycache__/
 
 # Ignore local prototype working dir
 prototype_repo/
+
+# Large binary files
+python-installer.exe
