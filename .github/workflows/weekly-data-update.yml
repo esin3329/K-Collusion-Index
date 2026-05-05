@@ -60,11 +60,14 @@ jobs:
           git push origin HEAD:${{ github.ref_name }}
 
       - name: Optional smoke test of Pages URL
-        if: ${{ secrets.PAGES_URL != '' }}
         env:
           PAGES_URL: ${{ secrets.PAGES_URL }}
         run: |
           set -e
+          if [ -z "$PAGES_URL" ]; then
+            echo "PAGES_URL not set, skipping smoke test"
+            exit 0
+          fi
           echo "Running smoke test against $PAGES_URL"
           ATTEMPTS=3
           SLEEP=10
