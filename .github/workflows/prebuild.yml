@@ -1,4 +1,4 @@
-name: Prebuild and Build
+name: Build
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  prebuild:
-    name: Prebuild (Python data) + Node build
+  build:
+    name: Build static Pages artifact
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -24,20 +24,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-
-      - name: Install Python dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pandas pandasdmx requests
+          python-version: '3.13'
 
       - name: Run data generation script
-        run: |
-          python python/generate_data.py
+        run: python python/generate_data.py
 
       - name: Verify generated file exists
-        run: |
-          if [ -f public/data/k-collusion-index.json ]; then echo "FOUND: public/data/k-collusion-index.json"; else echo "MISSING: public/data/k-collusion-index.json" && exit 1; fi
+        run: test -f public/data/k-collusion-index.json
 
       - name: Install Node dependencies
         run: npm ci
@@ -45,8 +38,13 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Upload build artifact (optional)
+      - name: Verify static export exists
+        run: |
+          test -f out/index.html
+          test -f out/data/k-collusion-index.json
+
+      - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
-          name: next-build
-          path: .next
+          name: cloudflare-pages-out
+          path: out

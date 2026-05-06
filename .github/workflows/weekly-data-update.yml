@@ -74,8 +74,8 @@ jobs:
           SLEEP=10
           SUCCESS=0
           for i in $(seq 1 $ATTEMPTS); do
-            echo "Attempt $i/$ATTEMPTS: fetching $PAGES_URL/public/data/k-collusion-index.json"
-            if curl -fsS "$PAGES_URL/public/data/k-collusion-index.json" -o /tmp/k-collusion-index.json; then
+            echo "Attempt $i/$ATTEMPTS: fetching $PAGES_URL/data/k-collusion-index.json"
+            if curl -fsS "$PAGES_URL/data/k-collusion-index.json" -o /tmp/k-collusion-index.json; then
               if [ -s /tmp/k-collusion-index.json ]; then
                 python -c "import sys,json; json.load(open('/tmp/k-collusion-index.json'))" && SUCCESS=1 && break || true
               fi
