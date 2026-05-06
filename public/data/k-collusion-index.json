@@ -111,7 +111,7 @@
     },
     {
       "countryCode": "TUR",
-      "countryName": "터키",
+      "countryName": "튀르키예",
       "indexValue": 68.3,
       "baseYear": 2023
     },
@@ -122,6 +122,6 @@
       "baseYear": 2023
     }
   ],
-  "timestamp": "2026-05-06T02:59:12.653160",
+  "timestamp": "2026-05-06T17:29:41.314298",
   "baseYear": 2023
 }

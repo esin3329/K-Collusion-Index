@@ -1,8 +1,8 @@
-import DashboardClient from '@/app/components/DashboardClient';
+import DashboardClient from "@/app/components/DashboardClient";
 
 export const metadata = {
-  title: '대시보드 | K-Collusion Index',
-  description: 'G20 국가들과 한국의 물가 수준을 비교하는 대시보드입니다.',
+  title: "Dashboard | K-Collusion Index",
+  description: "G20 countries compared against Korea's relative price index.",
 };
 
 export default function DashboardPage() {
