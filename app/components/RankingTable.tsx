@@ -1,6 +1,7 @@
 "use client";
 
 import { ChartDataItem } from "../types/oecd";
+import styles from "./RankingTable.module.css";
 
 interface RankingTableProps {
   data: ChartDataItem[];
@@ -10,44 +11,57 @@ export default function RankingTable({ data }: RankingTableProps) {
   const sortedData = [...data].sort((a, b) => a.rank - b.rank);
 
   return (
-    <div style={{ overflowX: "auto", margin: "20px 0" }}>
-      <table
-        style={{
-          width: "100%",
-          borderCollapse: "collapse",
-          textAlign: "left",
-          fontFamily: "sans-serif",
-        }}
-      >
+    <div className={styles.tableWrap}>
+      <table className={styles.table}>
         <thead>
-          <tr style={{ backgroundColor: "#f8fafc", borderBottom: "2px solid #cbd5e1" }}>
-            <th style={cellStyle}>순위</th>
-            <th style={cellStyle}>국가</th>
-            <th style={cellStyle}>지수</th>
+          <tr>
+            <th scope="col">순위</th>
+            <th scope="col">국가</th>
+            <th scope="col" className={styles.numeric}>
+              지수
+            </th>
+            <th scope="col" className={styles.numeric}>
+              한국 대비
+            </th>
           </tr>
         </thead>
         <tbody>
-          {sortedData.map((item) => (
-            <tr
-              key={item.countryCode}
-              style={{
-                borderBottom: "1px solid #e2e8f0",
-                backgroundColor: item.countryCode === "KOR" ? "#fff7ed" : "transparent",
-                fontWeight: item.countryCode === "KOR" ? "bold" : "normal",
-              }}
-            >
-              <td style={cellStyle}>{item.rank}</td>
-              <td style={cellStyle}>{item.name}</td>
-              <td style={cellStyle}>{item.value.toFixed(2)}</td>
-            </tr>
-          ))}
+          {sortedData.map((item) => {
+            const difference = item.value - 100;
+            const differenceLabel =
+              difference === 0
+                ? "기준"
+                : `${difference > 0 ? "+" : ""}${difference.toFixed(1)}`;
+
+            return (
+              <tr
+                key={item.countryCode}
+                className={item.countryCode === "KOR" ? styles.koreaRow : ""}
+              >
+                <td>{item.rank}</td>
+                <td>
+                  <span className={styles.country}>{item.name}</span>
+                  {item.countryCode === "KOR" && (
+                    <span className={styles.badge}>기준</span>
+                  )}
+                </td>
+                <td className={styles.numeric}>{item.value.toFixed(1)}</td>
+                <td
+                  className={`${styles.numeric} ${
+                    difference > 0
+                      ? styles.above
+                      : difference < 0
+                        ? styles.below
+                        : styles.base
+                  }`}
+                >
+                  {differenceLabel}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
   );
 }
-
-const cellStyle = {
-  padding: "12px",
-  borderBottom: "1px solid #e2e8f0",
-};

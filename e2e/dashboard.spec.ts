@@ -1,5 +1,12 @@
 import { test, expect } from '@playwright/test';
 
+type IndexDataItem = {
+  countryCode: string;
+  countryName: string;
+  indexValue: number;
+  baseYear: number;
+};
+
 test.describe('K-Collusion Index Dashboard', () => {
   test('대시보드 페이지가 정상적으로 로드된다', async ({ page }) => {
     await page.goto('/dashboard');
@@ -86,7 +93,7 @@ test.describe('K-Collusion Index Dashboard', () => {
     const response = await page.request.get('/api/oecd');
     const json = await response.json();
 
-    const koreaData = json.data.find((item: any) => item.countryCode === 'KOR');
+    const koreaData = json.data.find((item: IndexDataItem) => item.countryCode === 'KOR');
     expect(koreaData).toBeDefined();
     expect(koreaData.indexValue).toBe(100);
   });

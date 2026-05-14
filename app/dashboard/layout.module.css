@@ -25,7 +25,7 @@
 
 .nav {
   background-color: #2b6cb0;
-  padding: 0.75rem 2rem;
+  padding: 0.5rem 2rem;
 }
 
 .navList {
@@ -37,6 +37,9 @@
 }
 
 .navItem {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
   color: #e2e8f0;
   text-decoration: none;
   font-weight: 500;
@@ -61,7 +64,7 @@
   }
   
   .nav {
-    padding: 0.75rem 1rem;
+    padding: 0.45rem 1rem;
   }
   
   .navList {

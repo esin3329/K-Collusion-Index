@@ -6,6 +6,7 @@ import ErrorDisplay from "@/app/components/ErrorDisplay";
 import LoadingSpinner from "@/app/components/LoadingSpinner";
 import RankingTable from "@/app/components/RankingTable";
 import { ChartDataItem, KCollusionIndex } from "@/app/types/oecd";
+import styles from "./DashboardClient.module.css";
 
 type DataFile = {
   success: boolean;
@@ -14,6 +15,28 @@ type DataFile = {
   timestamp?: string;
   baseYear?: number;
 };
+
+type LoadedDataFile = DataFile & {
+  data: KCollusionIndex[];
+};
+
+async function loadIndexData(): Promise<LoadedDataFile> {
+  const res = await fetch("/data/k-collusion-index.json", {
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    throw new Error(`데이터 파일을 찾을 수 없습니다. (${res.status})`);
+  }
+
+  const json = (await res.json()) as DataFile;
+
+  if (!json.success || !json.data) {
+    throw new Error(json.error || "데이터가 없습니다.");
+  }
+
+  return { ...json, data: json.data };
+}
 
 export default function DashboardClient() {
   const [data, setData] = useState<KCollusionIndex[]>([]);
@@ -26,20 +49,7 @@ export default function DashboardClient() {
     setError(null);
 
     try {
-      const res = await fetch("/data/k-collusion-index.json", {
-        cache: "no-store",
-      });
-
-      if (!res.ok) {
-        throw new Error(`데이터 파일을 찾을 수 없습니다. (${res.status})`);
-      }
-
-      const json = (await res.json()) as DataFile;
-
-      if (!json.success || !json.data) {
-        throw new Error(json.error || "데이터가 없습니다.");
-      }
-
+      const json = await loadIndexData();
       setData(json.data);
       setLastUpdated(json.timestamp || null);
     } catch (err) {
@@ -54,7 +64,40 @@ export default function DashboardClient() {
   };
 
   useEffect(() => {
-    fetchData();
+    let cancelled = false;
+
+    async function loadInitialData() {
+      try {
+        const json = await loadIndexData();
+
+        if (cancelled) {
+          return;
+        }
+
+        setData(json.data);
+        setLastUpdated(json.timestamp || null);
+      } catch (err) {
+        if (cancelled) {
+          return;
+        }
+
+        setError(
+          err instanceof Error
+            ? err.message
+            : "데이터를 불러오는 과정에서 오류가 발생했습니다.",
+        );
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    }
+
+    loadInitialData();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const chartData: ChartDataItem[] = useMemo(
@@ -116,48 +159,34 @@ export default function DashboardClient() {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "2rem",
-      }}
-    >
-      <section style={{ borderBottom: "2px solid #e2e8f0", paddingBottom: "1.5rem" }}>
-        <h2
-          style={{
-            fontSize: "2rem",
-            color: "#1e293b",
-            marginBottom: "0.5rem",
-            fontWeight: 700,
-          }}
-        >
-          한국 물가 국제 비교
-        </h2>
-        <p style={{ color: "#64748b", fontSize: "1.05rem", lineHeight: 1.6 }}>
-          대한민국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 수준을 비교합니다.
-        </p>
+    <div className={styles.dashboard}>
+      <section className={styles.intro}>
+        <div>
+          <p className={styles.eyebrow}>Korea baseline: 100</p>
+          <h2 className={styles.title}>한국 물가 국제 비교</h2>
+          <p className={styles.description}>
+            대한민국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 수준을
+            비교합니다. 숫자가 높을수록 한국보다 물가 부담이 큽니다.
+          </p>
+        </div>
         {lastUpdated && (
-          <p style={{ color: "#94a3b8", fontSize: "0.9rem", marginTop: "0.5rem" }}>
-            마지막 업데이트: {new Date(lastUpdated).toLocaleString("ko-KR")}
+          <p className={styles.updated}>
+            마지막 업데이트 {new Date(lastUpdated).toLocaleString("ko-KR")}
           </p>
         )}
       </section>
 
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-          gap: "1rem",
-        }}
-      >
-        <MetricCard label="기준 국가" value={`${koreaData?.countryName || "대한민국"} (100)`} />
+      <section className={styles.metrics} aria-label="핵심 지표">
+        <MetricCard
+          label="기준 국가"
+          value={`${koreaData?.countryName || "대한민국"} 100`}
+        />
         <MetricCard label="평균 지수" value={avgIndex.toFixed(1)} />
         <MetricCard
           label="최고 물가"
           value={
             highestCountry
-              ? `${highestCountry.countryName} (${highestCountry.indexValue.toFixed(1)})`
+              ? `${highestCountry.countryName} ${highestCountry.indexValue.toFixed(1)}`
               : "-"
           }
         />
@@ -165,27 +194,37 @@ export default function DashboardClient() {
           label="최저 물가"
           value={
             lowestCountry
-              ? `${lowestCountry.countryName} (${lowestCountry.indexValue.toFixed(1)})`
+              ? `${lowestCountry.countryName} ${lowestCountry.indexValue.toFixed(1)}`
               : "-"
           }
         />
       </section>
 
-      <section style={panelStyle}>
-        <h3 style={headingStyle}>물가 지수 비교 차트</h3>
+      <section className={styles.panel}>
+        <div className={styles.sectionHeader}>
+          <h3>물가 지수 비교</h3>
+          <p>국가명을 바로 읽을 수 있도록 가로 막대로 정렬했습니다.</p>
+        </div>
         <BarChart data={chartData} />
       </section>
 
-      <section style={panelStyle}>
-        <h3 style={headingStyle}>국가별 순위</h3>
+      <section className={styles.panel}>
+        <div className={styles.sectionHeader}>
+          <h3>국가별 순위</h3>
+          <p>한국 기준선과의 차이를 함께 확인합니다.</p>
+        </div>
         <RankingTable data={chartData} />
       </section>
 
-      <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
-        <button type="button" onClick={downloadCsv} style={buttonStyle}>
+      <div className={styles.actions}>
+        <button type="button" onClick={downloadCsv} className={styles.action}>
           CSV 다운로드
         </button>
-        <a href="/data/k-collusion-index.json" download style={buttonStyle}>
+        <a
+          href="/data/k-collusion-index.json"
+          download
+          className={styles.secondaryAction}
+        >
           JSON 다운로드
         </a>
       </div>
@@ -195,50 +234,9 @@ export default function DashboardClient() {
 
 function MetricCard({ label, value }: { label: string; value: string }) {
   return (
-    <div
-      style={{
-        background: "#1e3a8a",
-        borderRadius: "8px",
-        padding: "1.25rem",
-        display: "flex",
-        flexDirection: "column",
-        gap: "0.5rem",
-        boxShadow: "0 4px 6px rgba(15, 23, 42, 0.12)",
-      }}
-    >
-      <span style={{ color: "#bfdbfe", fontSize: "0.9rem" }}>{label}</span>
-      <span style={{ color: "white", fontSize: "1.25rem", fontWeight: 700 }}>
-        {value}
-      </span>
+    <div className={styles.metricCard}>
+      <span className={styles.metricLabel}>{label}</span>
+      <span className={styles.metricValue}>{value}</span>
     </div>
   );
 }
-
-const panelStyle = {
-  background: "white",
-  borderRadius: "8px",
-  padding: "1.5rem",
-  boxShadow: "0 2px 4px rgba(15, 23, 42, 0.06)",
-  border: "1px solid #e2e8f0",
-};
-
-const headingStyle = {
-  fontSize: "1.25rem",
-  color: "#1e293b",
-  marginBottom: "1rem",
-  fontWeight: 700,
-  borderLeft: "4px solid #2563eb",
-  paddingLeft: "0.75rem",
-};
-
-const buttonStyle = {
-  display: "inline-block",
-  padding: "0.75rem 1.5rem",
-  backgroundColor: "#15803d",
-  color: "white",
-  textDecoration: "none",
-  borderRadius: "8px",
-  fontWeight: 600,
-  border: "none",
-  cursor: "pointer",
-};

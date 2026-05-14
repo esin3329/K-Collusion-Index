@@ -5,6 +5,7 @@ import {
   BarChart as RechartsBarChart,
   CartesianGrid,
   Cell,
+  LabelList,
   ReferenceLine,
   ResponsiveContainer,
   Tooltip,
@@ -18,37 +19,65 @@ interface BarChartProps {
 }
 
 export default function BarChart({ data }: BarChartProps) {
+  const height = Math.max(420, data.length * 30);
+
   return (
-    <div style={{ width: "100%", height: "420px", margin: "20px 0" }}>
+    <div style={{ width: "100%", height }}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart
           data={data}
+          layout="vertical"
           margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 70,
+            top: 10,
+            right: 34,
+            left: 12,
+            bottom: 10,
           }}
         >
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid horizontal={false} stroke="#e5e7eb" />
           <XAxis
-            dataKey="name"
-            angle={-45}
-            textAnchor="end"
-            height={90}
-            interval={0}
-            tick={{ fontSize: 12 }}
+            type="number"
+            domain={[0, "dataMax + 10"]}
+            tick={{ fill: "#64748b", fontSize: 12 }}
+            axisLine={{ stroke: "#cbd5e1" }}
+            tickLine={false}
           />
-          <YAxis label={{ value: "K-Collusion Index", angle: -90, position: "insideLeft" }} />
+          <YAxis
+            dataKey="name"
+            type="category"
+            width={112}
+            tick={{ fill: "#334155", fontSize: 12 }}
+            axisLine={false}
+            tickLine={false}
+          />
           <Tooltip
             formatter={(value) => [
-              typeof value === "number" ? value.toFixed(2) : value,
-              "Index",
+              typeof value === "number" ? value.toFixed(1) : value,
+              "지수",
             ]}
-            labelStyle={{ color: "#333" }}
+            labelStyle={{ color: "#111827", fontWeight: 700 }}
+            contentStyle={{
+              border: "1px solid #dbe3ef",
+              borderRadius: "8px",
+              boxShadow: "0 8px 24px rgba(15, 23, 42, 0.12)",
+            }}
           />
-          <ReferenceLine y={100} stroke="#dc2626" strokeDasharray="3 3" label="Korea (100)" />
-          <Bar dataKey="value" name="K-Collusion Index">
+          <ReferenceLine
+            x={100}
+            stroke="#dc2626"
+            strokeDasharray="4 4"
+            label={{ value: "한국 100", fill: "#b91c1c", fontSize: 12 }}
+          />
+          <Bar dataKey="value" name="K-Collusion Index" radius={[0, 4, 4, 0]}>
+            <LabelList
+              dataKey="value"
+              position="right"
+              formatter={(value) =>
+                typeof value === "number" ? value.toFixed(1) : value
+              }
+              fill="#475569"
+              fontSize={12}
+            />
             {data.map((entry) => (
               <Cell
                 key={entry.countryCode}
