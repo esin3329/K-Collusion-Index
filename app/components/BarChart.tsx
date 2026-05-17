@@ -22,7 +22,7 @@ export default function BarChart({ data }: BarChartProps) {
   const height = Math.max(420, data.length * 30);
 
   return (
-    <div style={{ width: "100%", height }}>
+    <div style={{ width: "100%", minWidth: 0, minHeight: height, height }}>
       <ResponsiveContainer width="100%" height="100%">
         <RechartsBarChart
           data={data}

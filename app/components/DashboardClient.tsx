@@ -14,6 +14,9 @@ type DataFile = {
   error?: string;
   timestamp?: string;
   baseYear?: number;
+  source?: string;
+  datasetType?: string;
+  isFallback?: boolean;
 };
 
 type LoadedDataFile = DataFile & {
@@ -166,7 +169,8 @@ export default function DashboardClient() {
           <h2 className={styles.title}>한국 물가 국제 비교</h2>
           <p className={styles.description}>
             대한민국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 수준을
-            비교합니다. 숫자가 높을수록 한국보다 물가 부담이 큽니다.
+            비교합니다. 숫자가 높을수록 한국보다 물가 부담이 큰 것으로
+            해석합니다.
           </p>
         </div>
         {lastUpdated && (

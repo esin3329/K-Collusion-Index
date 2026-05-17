@@ -1,91 +1,72 @@
-# K-Collusion Index (한국 물가 지수 비교 서비스)
+# K-Collusion Index
 
-K-Collusion Index는 한국의 물가 수준을 G20 국가들과 비교하여 시각화하는 웹 대시보드 프로젝트입니다. OECD 데이터를 활용하여 한국을 기준(100)으로 설정한 상대적 물가 지수를 제공합니다.
+K-Collusion Index는 대한민국의 물가 지수를 100으로 두고 G20 주요 국가의 상대 물가 수준을 비교하는 정적 대시보드입니다. Next.js 정적 export와 Cloudflare Pages 배포를 기준으로 동작하며, 브라우저는 `public/data/k-collusion-index.json` 파일을 직접 읽습니다.
 
 ## 주요 기능
 
-- **지수 계산**: 한국 물가를 100으로 설정하여 G20 국가들의 상대적 물가 지수 산출
-- **데이터 시각화**: Recharts를 활용한 직관적인 바 차트 및 순위 테이블 제공
-- **데이터 내보내기**: 분석된 데이터를 외부 형식으로 내보내는 기능
-- **실시간 데이터**: OECD API를 통한 최신 물가 데이터 반영
+- 한국 기준 상대 물가 지수 계산: `indexValue = (countryValue / koreaValue) * 100`
+- G20 국가별 물가 지수 막대 차트
+- 순위표와 한국 대비 차이 표시
+- CSV 다운로드와 JSON 다운로드
+- 빌드 시점 데이터 생성 및 정적 산출물 검증
 
 ## 기술 스택
 
-- **Frontend**: Next.js (App Router), TypeScript, Recharts
-- **Data Processing**: Python (pandas, pandasdmx)
-- **Data Source**: OECD SDMX-JSON API
-- **Styling**: Pure CSS (No Tailwind CSS)
+- Frontend: Next.js App Router, React, TypeScript
+- Chart: Recharts
+- Data generation: Python 표준 라이브러리
+- Hosting: Cloudflare Pages
+- Test: Playwright
 
-## 설치 및 실행 방법
-
-### 1. Python 환경 설정
-데이터 처리를 위해 Python 가상환경을 설정하고 필요한 패키지를 설치합니다.
+## 로컬 실행
 
 ```bash
-# 가상환경 생성
-python -m venv venv
-
-# 가상환경 활성화 (Windows)
-.\venv\Scripts\activate
-
-# 가상환경 활성화 (POSIX)
-source venv/bin/activate
-
-# 필요한 패키지 설치
-pip install pandas pandasdmx requests
-```
-
-### 2. Node.js 환경 설정
-프론트엔드 의존성을 설치하고 개발 서버를 실행합니다.
-
-```bash
-# 패키지 설치
 npm install
-
-# 개발 서버 실행
 npm run dev
 ```
 
-브라우저에서 [http://localhost:3000](http://localhost:3000)에 접속하여 결과를 확인할 수 있습니다.
+브라우저에서 `http://localhost:3000` 또는 `http://localhost:3000/dashboard`로 확인합니다.
 
-## CI / Build-time data generation (CI / 빌드 시 데이터 생성)
+## 데이터 생성
 
-이 프로젝트는 빌드 시점에 최신 데이터를 수집하여 정적 파일로 포함합니다. GitHub Actions를 통해 자동화되어 있으며, 로컬에서도 동일한 과정을 수행할 수 있습니다.
-
-### CI 워크플로우 (.github/workflows/prebuild.yml)
-- **트리거**: `main` 브랜치로의 push 및 pull request 발생 시 실행됩니다.
-- **역할**: Python 환경을 구축하고 `python/generate_data.py`를 실행하여 `public/data/k-collusion-index.json` 파일을 생성합니다. 이후 Next.js 빌드를 진행하여 데이터가 포함된 정적 사이트를 생성합니다.
-
-### 로컬에서 데이터 생성하기 (Local Prebuild)
-CI와 동일하게 로컬에서 데이터를 수집하고 생성하려면 다음 단계를 따르세요.
-
-#### 1. Python 가상환경 생성 및 활성화
 ```bash
-# POSIX (Linux, macOS)
-python -m venv venv
-source venv/bin/activate
-
-# Windows
-python -m venv venv
-.\venv\Scripts\activate
+python python/generate_data.py
 ```
 
-#### 2. 필수 패키지 설치
-```bash
-pip install pandas pandasdmx requests
+스크립트는 OECD SDMX CSV 엔드포인트에서 G20 CPI index 데이터를 가져오려고 시도합니다. OECD 호출 실패, 한국 기준값 누락, 일부 국가 누락이 발생하면 샘플 데이터로 fallback하고 `isFallback: true` 메타데이터를 JSON에 기록합니다.
+
+생성 파일:
+
+```text
+public/data/k-collusion-index.json
 ```
 
-#### 3. 데이터 생성 스크립트 실행 및 확인
-```bash
-# POSIX
-python python/generate_data.py && ls public/data/k-collusion-index.json
+## 빌드
 
-# Windows
-python python/generate_data.py; if (Test-Path public/data/k-collusion-index.json) { ls public/data/k-collusion-index.json }
+```bash
+npm run build
 ```
 
-## 데이터 출처
-본 프로젝트는 [OECD SDMX-JSON API](https://sdmx.oecd.org/public/rest/data/)에서 제공하는 공식 데이터를 사용합니다.
+`prebuild` 단계에서 데이터 파일을 생성한 뒤, Next.js가 `out` 디렉터리에 정적 사이트를 export합니다.
 
-## 라이선스
-이 프로젝트는 MIT 라이선스를 따릅니다.
+## 테스트
+
+```bash
+npx playwright test
+```
+
+Playwright 테스트는 정적 데이터 파일(`/data/k-collusion-index.json`)과 실제 대시보드 UI를 검증합니다.
+
+## CI/CD
+
+- `.github/workflows/prebuild.yml`: 데이터 생성, Next.js 빌드, `out` 산출물 검증
+- `.github/workflows/cloudflare-pages.yml`: Cloudflare Pages 배포
+- `.github/workflows/weekly-data-update.yml`: 주간 데이터 재생성 및 변경 시 커밋
+
+## 배포 설정
+
+Cloudflare Pages 산출물 경로는 `wrangler.toml`에서 `out`으로 지정합니다.
+
+```toml
+pages_build_output_dir = "out"
+```

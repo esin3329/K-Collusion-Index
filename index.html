@@ -3,309 +3,44 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta http-equiv="refresh" content="0; url=/dashboard" />
     <title>K-Collusion Index</title>
-    <meta
-      name="description"
-      content="대한민국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 수준을 비교합니다."
-    />
     <style>
-      :root {
-        color-scheme: light;
-        --bg: #f8fafc;
-        --panel: #ffffff;
-        --text: #172033;
-        --muted: #64748b;
-        --line: #dbe3ef;
-        --blue: #1d4ed8;
-        --blue-dark: #173b85;
-        --orange: #ea580c;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
       body {
         margin: 0;
-        background: var(--bg);
-        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #f6f7f9;
+        color: #172033;
         font-family:
-          Arial,
           "Apple SD Gothic Neo",
           "Malgun Gothic",
+          "Segoe UI",
+          Arial,
           sans-serif;
       }
 
-      header {
-        background: var(--blue-dark);
-        color: #fff;
-        padding: 28px max(24px, calc((100vw - 1120px) / 2));
-      }
-
-      header h1 {
-        margin: 0;
-        font-size: 28px;
-        line-height: 1.2;
-      }
-
-      header p {
-        margin: 8px 0 0;
-        color: #dbeafe;
-      }
-
       main {
-        width: min(1120px, calc(100vw - 32px));
-        margin: 28px auto 48px;
-        display: grid;
-        gap: 24px;
-      }
-
-      .summary {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-        gap: 14px;
-      }
-
-      .metric,
-      .panel {
-        background: var(--panel);
-        border: 1px solid var(--line);
+        width: min(520px, calc(100vw - 32px));
+        border: 1px solid #d8dee8;
         border-radius: 8px;
-        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.06);
+        background: #fff;
+        padding: 28px;
+        text-align: center;
       }
 
-      .metric {
-        padding: 18px;
-      }
-
-      .metric span {
-        display: block;
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .metric strong {
-        display: block;
-        margin-top: 8px;
-        font-size: 22px;
-      }
-
-      .panel {
-        padding: 22px;
-      }
-
-      .panel h2 {
-        margin: 0 0 16px;
-        padding-left: 12px;
-        border-left: 4px solid var(--blue);
-        font-size: 21px;
-      }
-
-      .chart {
-        display: grid;
-        gap: 10px;
-      }
-
-      .bar-row {
-        display: grid;
-        grid-template-columns: 96px 1fr 64px;
-        align-items: center;
-        gap: 12px;
-        min-height: 28px;
-        font-size: 14px;
-      }
-
-      .bar-track {
-        height: 18px;
-        background: #e7edf6;
-        border-radius: 999px;
-        overflow: hidden;
-      }
-
-      .bar {
-        height: 100%;
-        background: var(--blue);
-        border-radius: inherit;
-      }
-
-      .bar.korea {
-        background: var(--orange);
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 15px;
-      }
-
-      th,
-      td {
-        padding: 12px;
-        border-bottom: 1px solid var(--line);
-        text-align: left;
-      }
-
-      th {
-        background: #f1f5f9;
-      }
-
-      tr.korea {
-        background: #fff7ed;
+      a {
+        color: #2457a6;
         font-weight: 700;
-      }
-
-      .actions {
-        display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-
-      .actions a,
-      .actions button {
-        border: 0;
-        border-radius: 8px;
-        padding: 11px 16px;
-        background: #15803d;
-        color: #fff;
-        font: inherit;
-        font-weight: 700;
-        text-decoration: none;
-        cursor: pointer;
-      }
-
-      @media (max-width: 640px) {
-        .bar-row {
-          grid-template-columns: 78px 1fr 52px;
-          gap: 8px;
-          font-size: 13px;
-        }
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>K-Collusion Index</h1>
-      <p>대한민국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 수준을 비교합니다.</p>
-    </header>
     <main>
-      <section class="summary" id="summary"></section>
-      <section class="panel">
-        <h2>물가 지수 비교 차트</h2>
-        <div class="chart" id="chart"></div>
-      </section>
-      <section class="panel">
-        <h2>국가별 순위</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>순위</th>
-              <th>국가</th>
-              <th>지수</th>
-            </tr>
-          </thead>
-          <tbody id="ranking"></tbody>
-        </table>
-      </section>
-      <div class="actions">
-        <button type="button" id="csv">CSV 다운로드</button>
-        <a href="public/data/k-collusion-index.json" download>JSON 다운로드</a>
-      </div>
+      <h1>K-Collusion Index</h1>
+      <p>대시보드로 이동 중입니다.</p>
+      <p><a href="/dashboard">대시보드 바로가기</a></p>
     </main>
-    <script>
-      const fallbackData = [
-        { countryCode: "USA", countryName: "미국", indexValue: 125.5, baseYear: 2023 },
-        { countryCode: "GBR", countryName: "영국", indexValue: 118.7, baseYear: 2023 },
-        { countryCode: "DEU", countryName: "독일", indexValue: 112.3, baseYear: 2023 },
-        { countryCode: "FRA", countryName: "프랑스", indexValue: 110.5, baseYear: 2023 },
-        { countryCode: "EU27", countryName: "유럽연합", indexValue: 108.5, baseYear: 2023 },
-        { countryCode: "AUS", countryName: "호주", indexValue: 108.2, baseYear: 2023 },
-        { countryCode: "ITA", countryName: "이탈리아", indexValue: 107.4, baseYear: 2023 },
-        { countryCode: "CAN", countryName: "캐나다", indexValue: 105.8, baseYear: 2023 },
-        { countryCode: "KOR", countryName: "대한민국", indexValue: 100, baseYear: 2023 },
-        { countryCode: "JPN", countryName: "일본", indexValue: 98.2, baseYear: 2023 },
-        { countryCode: "SAU", countryName: "사우디아라비아", indexValue: 95.2, baseYear: 2023 },
-        { countryCode: "RUS", countryName: "러시아", indexValue: 88.6, baseYear: 2023 },
-        { countryCode: "CHN", countryName: "중국", indexValue: 85.3, baseYear: 2023 },
-        { countryCode: "BRA", countryName: "브라질", indexValue: 82.4, baseYear: 2023 },
-        { countryCode: "MEX", countryName: "멕시코", indexValue: 78.5, baseYear: 2023 },
-        { countryCode: "ZAF", countryName: "남아프리카공화국", indexValue: 75.8, baseYear: 2023 },
-        { countryCode: "IND", countryName: "인도", indexValue: 72.1, baseYear: 2023 },
-        { countryCode: "IDN", countryName: "인도네시아", indexValue: 70.2, baseYear: 2023 },
-        { countryCode: "TUR", countryName: "튀르키예", indexValue: 68.3, baseYear: 2023 },
-        { countryCode: "ARG", countryName: "아르헨티나", indexValue: 65.4, baseYear: 2023 },
-      ];
-
-      async function loadData() {
-        for (const url of ["data/k-collusion-index.json", "public/data/k-collusion-index.json"]) {
-          try {
-            const response = await fetch(url, { cache: "no-store" });
-            if (response.ok) {
-              const json = await response.json();
-              if (json && Array.isArray(json.data)) return json.data;
-            }
-          } catch {}
-        }
-        return fallbackData;
-      }
-
-      function render(data) {
-        const sorted = [...data].sort((a, b) => b.indexValue - a.indexValue);
-        const average = sorted.reduce((sum, item) => sum + item.indexValue, 0) / sorted.length;
-        const highest = sorted[0];
-        const lowest = sorted[sorted.length - 1];
-        const max = highest.indexValue;
-
-        document.getElementById("summary").innerHTML = [
-          ["기준 국가", "대한민국 (100)"],
-          ["평균 지수", average.toFixed(1)],
-          ["최고 물가", `${highest.countryName} (${highest.indexValue.toFixed(1)})`],
-          ["최저 물가", `${lowest.countryName} (${lowest.indexValue.toFixed(1)})`],
-        ]
-          .map(([label, value]) => `<article class="metric"><span>${label}</span><strong>${value}</strong></article>`)
-          .join("");
-
-        document.getElementById("chart").innerHTML = sorted
-          .map(
-            (item) => `
-              <div class="bar-row">
-                <span>${item.countryName}</span>
-                <div class="bar-track">
-                  <div class="bar ${item.countryCode === "KOR" ? "korea" : ""}" style="width:${(item.indexValue / max) * 100}%"></div>
-                </div>
-                <strong>${item.indexValue.toFixed(1)}</strong>
-              </div>
-            `,
-          )
-          .join("");
-
-        document.getElementById("ranking").innerHTML = sorted
-          .map(
-            (item, index) => `
-              <tr class="${item.countryCode === "KOR" ? "korea" : ""}">
-                <td>${index + 1}</td>
-                <td>${item.countryName}</td>
-                <td>${item.indexValue.toFixed(2)}</td>
-              </tr>
-            `,
-          )
-          .join("");
-
-        document.getElementById("csv").onclick = () => {
-          const rows = sorted.map((item) =>
-            [item.countryCode, `"${item.countryName}"`, item.indexValue, item.baseYear].join(","),
-          );
-          const blob = new Blob([["countryCode,countryName,indexValue,baseYear", ...rows].join("\n")], {
-            type: "text/csv;charset=utf-8",
-          });
-          const link = document.createElement("a");
-          link.href = URL.createObjectURL(blob);
-          link.download = "k-collusion-index.csv";
-          link.click();
-          URL.revokeObjectURL(link.href);
-        };
-      }
-
-      loadData().then(render);
-    </script>
   </body>
 </html>

@@ -2,126 +2,149 @@
   "success": true,
   "data": [
     {
-      "countryCode": "USA",
-      "countryName": "미국",
-      "indexValue": 125.5,
-      "baseYear": 2023
+      "countryCode": "BRA",
+      "countryName": "브라질",
+      "indexValue": 131.38,
+      "baseYear": 2023,
+      "source": "OECD"
+    },
+    {
+      "countryCode": "IND",
+      "countryName": "인도",
+      "indexValue": 127.75,
+      "baseYear": 2023,
+      "source": "OECD"
+    },
+    {
+      "countryCode": "ZAF",
+      "countryName": "남아프리카공화국",
+      "indexValue": 127.17,
+      "baseYear": 2023,
+      "source": "OECD"
+    },
+    {
+      "countryCode": "MEX",
+      "countryName": "멕시코",
+      "indexValue": 125.38,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "GBR",
       "countryName": "영국",
       "indexValue": 118.7,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     },
     {
       "countryCode": "DEU",
       "countryName": "독일",
       "indexValue": 112.3,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     },
     {
       "countryCode": "FRA",
       "countryName": "프랑스",
       "indexValue": 110.5,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
+    },
+    {
+      "countryCode": "USA",
+      "countryName": "미국",
+      "indexValue": 109.28,
+      "baseYear": 2023,
+      "source": "OECD"
+    },
+    {
+      "countryCode": "IDN",
+      "countryName": "인도네시아",
+      "indexValue": 108.62,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "EU27",
       "countryName": "유럽연합",
       "indexValue": 108.5,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "AUS",
-      "countryName": "호주",
-      "indexValue": 108.2,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     },
     {
       "countryCode": "ITA",
       "countryName": "이탈리아",
       "indexValue": 107.4,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
+    },
+    {
+      "countryCode": "AUS",
+      "countryName": "호주",
+      "indexValue": 106.13,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "CAN",
       "countryName": "캐나다",
-      "indexValue": 105.8,
-      "baseYear": 2023
+      "indexValue": 105.52,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "KOR",
       "countryName": "대한민국",
       "indexValue": 100.0,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
-      "countryCode": "JPN",
-      "countryName": "일본",
-      "indexValue": 98.2,
-      "baseYear": 2023
+      "countryCode": "CHN",
+      "countryName": "중국",
+      "indexValue": 97.81,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "SAU",
       "countryName": "사우디아라비아",
-      "indexValue": 95.2,
-      "baseYear": 2023
+      "indexValue": 97.37,
+      "baseYear": 2023,
+      "source": "OECD"
+    },
+    {
+      "countryCode": "JPN",
+      "countryName": "일본",
+      "indexValue": 91.38,
+      "baseYear": 2023,
+      "source": "OECD"
     },
     {
       "countryCode": "RUS",
       "countryName": "러시아",
       "indexValue": 88.6,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "CHN",
-      "countryName": "중국",
-      "indexValue": 85.3,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "BRA",
-      "countryName": "브라질",
-      "indexValue": 82.4,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "MEX",
-      "countryName": "멕시코",
-      "indexValue": 78.5,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "ZAF",
-      "countryName": "남아프리카공화국",
-      "indexValue": 75.8,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "IND",
-      "countryName": "인도",
-      "indexValue": 72.1,
-      "baseYear": 2023
-    },
-    {
-      "countryCode": "IDN",
-      "countryName": "인도네시아",
-      "indexValue": 70.2,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     },
     {
       "countryCode": "TUR",
       "countryName": "튀르키예",
       "indexValue": 68.3,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     },
     {
       "countryCode": "ARG",
       "countryName": "아르헨티나",
       "indexValue": 65.4,
-      "baseYear": 2023
+      "baseYear": 2023,
+      "source": "sample"
     }
   ],
-  "timestamp": "2026-05-17T08:24:35.920400",
-  "baseYear": 2023
+  "timestamp": "2026-05-18T03:05:47.348983",
+  "baseYear": 2023,
+  "source": "OECD SDMX API with sample fallback",
+  "datasetType": "CPI_INDEX",
+  "isFallback": true
 }

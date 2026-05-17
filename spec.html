@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>K-Collusion Index 스펙 정리</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f6f7f9;
+        --surface: #ffffff;
+        --ink: #1c2430;
+        --muted: #5f6b7a;
+        --line: #d8dee8;
+        --accent: #2457a6;
+        --accent-soft: #e8f0ff;
+        --warn: #b45309;
+        --ok: #15803d;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family:
+          "Apple SD Gothic Neo",
+          "Malgun Gothic",
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        line-height: 1.65;
+      }
+
+      header {
+        background: #172033;
+        color: #fff;
+        padding: 44px max(24px, calc((100vw - 1080px) / 2));
+      }
+
+      header p {
+        max-width: 780px;
+        margin: 10px 0 0;
+        color: #dbe5f3;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(30px, 4vw, 48px);
+        line-height: 1.15;
+        letter-spacing: 0;
+      }
+
+      h2 {
+        margin: 0 0 18px;
+        font-size: 24px;
+        line-height: 1.3;
+        letter-spacing: 0;
+      }
+
+      h3 {
+        margin: 22px 0 8px;
+        font-size: 18px;
+        letter-spacing: 0;
+      }
+
+      main {
+        width: min(1080px, calc(100vw - 32px));
+        margin: 28px auto 56px;
+        display: grid;
+        gap: 18px;
+      }
+
+      section,
+      .toc {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .toc {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .toc a {
+        color: var(--accent);
+        background: var(--accent-soft);
+        border-radius: 6px;
+        padding: 8px 12px;
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+      }
+
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        padding: 16px;
+        background: #fbfcfe;
+      }
+
+      .card strong {
+        display: block;
+        margin-bottom: 6px;
+        color: #111827;
+      }
+
+      ul,
+      ol {
+        margin: 8px 0 0;
+        padding-left: 22px;
+      }
+
+      li + li {
+        margin-top: 6px;
+      }
+
+      code {
+        border: 1px solid #d7dde7;
+        border-radius: 5px;
+        background: #f3f5f8;
+        padding: 2px 6px;
+        font-family: Consolas, "SFMono-Regular", monospace;
+        font-size: 0.94em;
+      }
+
+      pre {
+        overflow-x: auto;
+        border: 1px solid #d7dde7;
+        border-radius: 8px;
+        background: #101827;
+        color: #edf2ff;
+        padding: 16px;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 12px;
+        font-size: 15px;
+      }
+
+      th,
+      td {
+        border-bottom: 1px solid var(--line);
+        padding: 10px 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      th {
+        background: #eef2f7;
+      }
+
+      .tag {
+        display: inline-block;
+        border-radius: 999px;
+        padding: 2px 9px;
+        background: #ecfdf5;
+        color: var(--ok);
+        font-size: 13px;
+        font-weight: 700;
+      }
+
+      .tag.warn {
+        background: #fff7ed;
+        color: var(--warn);
+      }
+
+      .note {
+        border-left: 4px solid var(--warn);
+        background: #fffaf0;
+        padding: 12px 14px;
+        color: #563817;
+      }
+
+      footer {
+        width: min(1080px, calc(100vw - 32px));
+        margin: 0 auto 36px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>K-Collusion Index 스펙 정리</h1>
+      <p>
+        한국을 기준값 100으로 두고 G20 주요 국가의 상대 물가 지수를 비교하는
+        정적 대시보드 프로젝트의 현재 구현 기준 스펙입니다.
+      </p>
+    </header>
+
+    <main>
+      <nav class="toc" aria-label="문서 목차">
+        <a href="#overview">개요</a>
+        <a href="#scope">범위</a>
+        <a href="#data">데이터</a>
+        <a href="#formula">계산식</a>
+        <a href="#ui">화면</a>
+        <a href="#architecture">구조</a>
+        <a href="#deploy">빌드/배포</a>
+        <a href="#risks">이슈</a>
+      </nav>
+
+      <section id="overview">
+        <h2>1. 제품 개요</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>제품명</strong>
+            K-Collusion Index
+          </div>
+          <div class="card">
+            <strong>핵심 목적</strong>
+            한국 기준 상대 물가 수준을 G20 국가별로 한 화면에서 비교
+          </div>
+          <div class="card">
+            <strong>기준값</strong>
+            대한민국 <code>KOR</code> = 100
+          </div>
+          <div class="card">
+            <strong>기준 연도</strong>
+            현재 데이터 파일 기준 <code>2023</code>
+          </div>
+        </div>
+      </section>
+
+      <section id="scope">
+        <h2>2. 기능 범위</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>구분</th>
+              <th>스펙</th>
+              <th>현재 상태</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>대시보드</td>
+              <td>상대 물가 지수 차트, 국가 순위표, 요약 지표 제공</td>
+              <td><span class="tag">구현</span></td>
+            </tr>
+            <tr>
+              <td>데이터 로딩</td>
+              <td><code>/data/k-collusion-index.json</code> 정적 JSON 파일 사용</td>
+              <td><span class="tag">구현</span></td>
+            </tr>
+            <tr>
+              <td>다운로드</td>
+              <td>브라우저에서 CSV 생성 다운로드, JSON 파일 직접 다운로드</td>
+              <td><span class="tag">구현</span></td>
+            </tr>
+            <tr>
+              <td>OECD 연동</td>
+              <td>OECD SDMX API 기반 CPI 데이터 수집, 실패 시 샘플 데이터 fallback</td>
+              <td><span class="tag">구현</span></td>
+            </tr>
+            <tr>
+              <td>정기 업데이트</td>
+              <td>GitHub Actions 주간 데이터 재생성 및 커밋</td>
+              <td><span class="tag">구현</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="data">
+        <h2>3. 데이터 스펙</h2>
+        <h3>대상 국가</h3>
+        <p>
+          대상 코드는
+          <code>ARG</code>, <code>AUS</code>, <code>BRA</code>,
+          <code>CAN</code>, <code>CHN</code>, <code>FRA</code>,
+          <code>DEU</code>, <code>IND</code>, <code>IDN</code>,
+          <code>ITA</code>, <code>JPN</code>, <code>KOR</code>,
+          <code>MEX</code>, <code>RUS</code>, <code>SAU</code>,
+          <code>ZAF</code>, <code>TUR</code>, <code>GBR</code>,
+          <code>USA</code>, <code>EU27</code>입니다.
+        </p>
+
+        <h3>정적 JSON 구조</h3>
+        <pre><code>{
+  "success": true,
+  "data": [
+    {
+      "countryCode": "USA",
+      "countryName": "미국",
+      "indexValue": 125.5,
+      "baseYear": 2023
+    }
+  ],
+  "timestamp": "2026-05-10T08:11:12.236069",
+  "baseYear": 2023
+}</code></pre>
+
+        <h3>프론트엔드 타입</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>필드</th>
+              <th>타입</th>
+              <th>설명</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>countryCode</code></td>
+              <td>G20CountryCode</td>
+              <td>국가 코드</td>
+            </tr>
+            <tr>
+              <td><code>countryName</code></td>
+              <td>string</td>
+              <td>표시용 국가명</td>
+            </tr>
+            <tr>
+              <td><code>indexValue</code></td>
+              <td>number</td>
+              <td>한국 기준 상대 지수</td>
+            </tr>
+            <tr>
+              <td><code>baseYear</code></td>
+              <td>number</td>
+              <td>데이터 기준 연도</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="formula">
+        <h2>4. 계산 스펙</h2>
+        <p>
+          지수는 기준 연도의 한국 값을 분모로 두고, 각 국가 값을 상대화해서
+          산출합니다. 한국은 표시 안정성을 위해 항상 100으로 보정합니다.
+        </p>
+        <pre><code>indexValue = round((countryValue / koreaValue) * 100, 2)
+KOR.indexValue = 100.0</code></pre>
+        <ul>
+          <li>단일 연도 계산 함수: <code>calculate_k_collusion_index</code></li>
+          <li>다중 연도 계산 함수: <code>calculate_multi_year_index</code></li>
+          <li>정렬 기준: <code>indexValue</code> 내림차순</li>
+          <li>현재 정적 데이터 생성 스크립트는 OECD CPI index 데이터를 우선 사용하고, 실패 시 샘플 지수값으로 fallback합니다.</li>
+        </ul>
+      </section>
+
+      <section id="ui">
+        <h2>5. 화면 스펙</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>영역</th>
+              <th>요구사항</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>인트로</td>
+              <td>한국 기준 100, 대시보드 설명, 마지막 업데이트 시각 표시</td>
+            </tr>
+            <tr>
+              <td>요약 지표</td>
+              <td>기준 국가, 평균 지수, 최고 물가 국가, 최저 물가 국가</td>
+            </tr>
+            <tr>
+              <td>차트</td>
+              <td>Recharts 세로 막대 차트, 한국 기준선 100 표시, 한국 막대 강조</td>
+            </tr>
+            <tr>
+              <td>순위표</td>
+              <td>순위, 국가명, 지수, 한국 대비 차이 표시</td>
+            </tr>
+            <tr>
+              <td>내보내기</td>
+              <td>CSV 다운로드 버튼, JSON 다운로드 링크 제공</td>
+            </tr>
+            <tr>
+              <td>오류 상태</td>
+              <td>데이터 파일 로딩 실패 시 오류 화면과 재시도 버튼 표시</td>
+            </tr>
+            <tr>
+              <td>로딩 상태</td>
+              <td>초기 데이터 로딩 중 스피너 표시</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="architecture">
+        <h2>6. 기술 구조</h2>
+        <div class="grid">
+          <div class="card">
+            <strong>Frontend</strong>
+            Next.js App Router, React 19, TypeScript
+          </div>
+          <div class="card">
+            <strong>Visualization</strong>
+            Recharts 기반 세로 막대 차트
+          </div>
+          <div class="card">
+            <strong>Data Processing</strong>
+            Python 스크립트로 JSON 생성
+          </div>
+          <div class="card">
+            <strong>Hosting</strong>
+            Next.js static export 후 Cloudflare Pages 배포
+          </div>
+        </div>
+
+        <h3>주요 파일</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>파일</th>
+              <th>역할</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>app/page.tsx</code>, <code>app/dashboard/page.tsx</code></td>
+              <td>대시보드 엔트리 페이지</td>
+            </tr>
+            <tr>
+              <td><code>app/components/DashboardClient.tsx</code></td>
+              <td>데이터 로딩, 요약 지표 계산, 다운로드 처리</td>
+            </tr>
+            <tr>
+              <td><code>app/components/BarChart.tsx</code></td>
+              <td>차트 렌더링</td>
+            </tr>
+            <tr>
+              <td><code>app/components/RankingTable.tsx</code></td>
+              <td>순위표 렌더링</td>
+            </tr>
+            <tr>
+              <td><code>python/generate_data.py</code></td>
+              <td>정적 JSON 데이터 파일 생성</td>
+            </tr>
+            <tr>
+              <td><code>python/index_calculator.py</code></td>
+              <td>상대 지수 계산 로직</td>
+            </tr>
+            <tr>
+              <td><code>public/data/k-collusion-index.json</code></td>
+              <td>대시보드가 읽는 배포용 데이터</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="deploy">
+        <h2>7. 빌드, 테스트, 배포</h2>
+        <h3>로컬 실행</h3>
+        <pre><code>npm install
+npm run dev</code></pre>
+
+        <h3>정적 빌드</h3>
+        <pre><code>npm run build</code></pre>
+        <p>
+          <code>prebuild</code> 단계에서 <code>python/generate_data.py</code>가
+          실행되고, Next.js는 <code>out</code> 디렉터리로 정적 export합니다.
+        </p>
+
+        <h3>CI/CD</h3>
+        <ul>
+          <li><code>prebuild.yml</code>: 데이터 생성, Next.js 빌드, 정적 산출물 검증</li>
+          <li><code>cloudflare-pages.yml</code>: Cloudflare Pages 배포</li>
+          <li><code>weekly-data-update.yml</code>: 매주 일요일 06:00 UTC 데이터 재생성 및 커밋</li>
+        </ul>
+      </section>
+
+      <section id="risks">
+        <h2>8. 확인된 이슈와 개선 필요사항</h2>
+        <div class="note">
+          한국어 UI 문구, 테스트 문자열, 국가명 매핑은 UTF-8 기준으로 복구했습니다.
+          남은 작업은 OECD 응답 변동에 대한 데이터 품질 검증 강화입니다.
+        </div>
+        <ul>
+          <li>OECD API가 일부 국가의 CPI index 값을 반환하지 않으면 샘플 데이터로 fallback합니다.</li>
+          <li>fallback 여부는 JSON의 <code>isFallback</code>, <code>source</code>, <code>datasetType</code> 메타데이터로 확인합니다.</li>
+          <li>OECD 데이터가 실제 배포 기준으로 충분히 안정적인지 주간 업데이트 로그를 모니터링해야 합니다.</li>
+          <li>샘플 데이터 fallback이 장기간 유지될 경우 사용자에게 데이터 출처 상태를 UI에서 표시하는 개선이 필요합니다.</li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      작성 기준: 현재 로컬 저장소의 구현 상태. 문서 파일: <code>spec.html</code>
+    </footer>
+  </body>
+</html>
